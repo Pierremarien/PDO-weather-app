@@ -23,6 +23,7 @@ catch(Exception $e)
         $query = $bdd->query('SELECT * from météo');
         $meteo = $query->fetchAll(PDO::FETCH_ASSOC);
         
+        echo '<form method="post" action="delete.php">';
         echo '<table>';
         echo '<tr>';
 
@@ -31,6 +32,7 @@ catch(Exception $e)
             $key = array_keys($meteo[0])[$i];
             echo '<th>' . $key . '</th>';
         }
+        echo '<th>Delete</th>';
         echo '</tr>';
 
         $meteoLength=count($meteo);
@@ -44,10 +46,12 @@ catch(Exception $e)
                 $value = $rowValues[$k];
                 echo '<td>' . $value . '</td>';
             }
-        
+            echo '<td><input type="checkbox" name="checkbox[]" value="' . $row['ville'] . '"></td>';
             echo '</tr>';
         }
         echo '</table>';
+        echo '<input type="submit" name="delete" value="Delete Selected">';
+        echo '</form>';
 
     if (isset($_POST['submit'])) {
         $ville = $_POST['ville'];
@@ -67,6 +71,7 @@ catch(Exception $e)
         }
         
     }
+
 }
 catch(Exception $e)
 {
